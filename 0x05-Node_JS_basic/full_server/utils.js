@@ -7,7 +7,7 @@ const readFileAsync = util.promisify(fs.readFile);
 /**
  * Reads the database asynchronously.
  * @param {string} databasePath Path to the database file.
- * @returns {Promise<Object>} Promise that resolves to an object containing student names grouped by field.
+ * @returns {Promise<Object>} Promise that resolves to an object containing student names
  */
 async function readDatabase(databasePath) {
   try {

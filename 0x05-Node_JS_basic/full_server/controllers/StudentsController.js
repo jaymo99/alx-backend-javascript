@@ -8,17 +8,17 @@ class StudentsController {
    */
   static async getAllStudents(req, res) {
     try {
-      const databasePath = req.app.locals.databasePath; // Retrieve database filename dynamically
+      const databasePath = process.argv[2]; // Retrieve database filename dynamically
       const { totalStudents, students } = await readDatabase(databasePath);
 
-      let response = `This is the list of our students\nNumber of students: ${totalStudents}\n`;
+      let response = `This is the list of our students\n`;
       for (const [field, names] of Object.entries(students)) {
         response += `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}\n`;
       }
 
       res.status(200).send(response);
     } catch (error) {
-      res.status(500).send(`This is the list of our students\n${error.message}`);
+      res.status(500).send(`${error.message}`);
     }
   }
 
@@ -34,7 +34,7 @@ class StudentsController {
     }
 
     try {
-      const databasePath = req.app.locals.databasePath; // Retrieve database filename dynamically
+      const databasePath = process.argv[2]; // Retrieve database filename dynamically
       const { students } = await readDatabase(databasePath);
 
       const studentsInMajor = students[major] || [];
@@ -42,7 +42,7 @@ class StudentsController {
 
       res.status(200).send(response);
     } catch (error) {
-      res.status(500).send(`Cannot load the database: ${error.message}`);
+      res.status(500).send(error.message);
     }
   }
 }
