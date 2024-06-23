@@ -10,8 +10,9 @@ class StudentsController {
     try {
       const databasePath = process.argv[2]; // Retrieve database filename dynamically
       const { totalStudents, students } = await readDatabase(databasePath);
+      console.info(totalStudents);
 
-      let response = `This is the list of our students\n`;
+      let response = 'This is the list of our students\n';
       for (const [field, names] of Object.entries(students)) {
         response += `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}\n`;
       }
@@ -30,7 +31,8 @@ class StudentsController {
   static async getAllStudentsByMajor(req, res) {
     const { major } = req.params;
     if (major !== 'CS' && major !== 'SWE') {
-      return res.status(500).send('Major parameter must be CS or SWE');
+      res.status(500).send('Major parameter must be CS or SWE');
+      return;
     }
 
     try {
